@@ -14,14 +14,14 @@ protocol SearchDelegate: class {
 
 class PlaylistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchDelegate {
         
-    var movieTable: UITableView!
-    var addButton: UIButton!
+    var playlistName: String!
 
-    private var title: String!
+    private var movieTable: UITableView!
+    private var addButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = title
+        self.navigationItem.title = self.playlistName
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.view.backgroundColor = .systemBackground
         
@@ -102,7 +102,7 @@ class PlaylistViewController: UIViewController, UITableViewDataSource, UITableVi
         let archiver = NSKeyedArchiver(requiringSecureCoding: false)
         do {
             try archiver.encodeEncodable(self.movies, forKey: NSKeyedArchiveRootObjectKey)
-            UserDefaults.standard.set(archiver.encodedData, forKey: "movies")
+            UserDefaults.standard.set(archiver.encodedData, forKey: self.playlistName)
         } catch _ {
             // Handle error
         }
@@ -118,7 +118,7 @@ class PlaylistViewController: UIViewController, UITableViewDataSource, UITableVi
 
     private func loadMovies() {
         // TODO: Create a movie service to hold this data instead of unarchiving every time
-        guard let data = UserDefaults.standard.data(forKey: "movies"),
+        guard let data = UserDefaults.standard.data(forKey: self.playlistName),
             let unarchiver = try? NSKeyedUnarchiver(forReadingFrom: data),
             let decodable = unarchiver.decodeDecodable([Movie].self, forKey: NSKeyedArchiveRootObjectKey) else {
                 return
