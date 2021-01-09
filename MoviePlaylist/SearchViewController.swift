@@ -31,7 +31,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         let closeButton = UIButton(type: .custom)
         closeButton.setTitle("Done", for: .normal)
-        closeButton.setTitleColor(.systemBlue, for: .normal)
+        closeButton.setTitleColor(.darkGray, for: .normal)
         closeButton.addTarget(self, action: #selector(SearchViewController.handleCloseTapped), for: .touchUpInside)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
 
